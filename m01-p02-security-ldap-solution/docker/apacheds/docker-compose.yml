@@ -1,0 +1,7 @@
+version: '2.1'
+services:
+  apacheds:
+    image: docker pull openmicroscopy/apacheds
+    restart: always
+    ports:
+      - 389:389/tcp

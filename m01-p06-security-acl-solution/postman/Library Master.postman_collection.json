@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "6173fdbf-2758-4916-aae9-a68279c46a64",
+		"name": "Library Master",
+		"description": "Collection of the REST API requests for the Library Master example app.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "All Books",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/library/books"
+			},
+			"response": []
+		},
+		{
+			"name": "All Books as Arya",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "stark",
+						"username": "arya@library.do"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/library/books/2"
+			},
+			"response": []
+		},
+		{
+			"name": "All Books as John",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "snow",
+						"username": "john@library.do"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/library/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Book by ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/books/1"
+			},
+			"response": []
+		},
+		{
+			"name": "All Books Authorization",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "password",
+						"username": "user"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/library/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/logout"
+			},
+			"response": []
+		},
+		{
+			"name": "JWT Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"john\",\r\n    \"password\": \"snow\"\r\n}"
+				},
+				"url": "http://localhost:8080/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Form Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "arya",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "stark",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:8080/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Form with Pin Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "arya",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "stark",
+							"type": "text"
+						},
+						{
+							"key": "pin",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:8080/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Keycloak Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "90939bda-3e30-4fb8-9c12-59da06a4b57a",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "testclient",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "testuser@local.do",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:9080/auth/realms/testrealm/protocol/openid-connect/token"
+			},
+			"response": []
+		},
+		{
+			"name": "All Books with JWT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huIiwiZXhwIjoxNTIzMzc0NTE4fQ.OosjP7LymG29mMGSTUAOjVyyrMZQFArxTwpJpluVnZCqMUcLCfzapVWHsGaAdn_pkJrMVy3p6Sprr0odpOaD3w"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/library/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book as John",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "snow",
+						"username": "john@library.do"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"isbn\": \"9780006479888\",\n        \"author\": \"George R. R. Martin\",\n        \"title\": \"A Game of Thrones\",\n        \"publisher\": \"HarperCollins Publishers\",\n        \"cid\": \"LM-000001\",\n        \"genre\": \"Fantasy\",\n        \"availability\": \"Available\"\n    }"
+				},
+				"url": "http://localhost:8080/library/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book as Arya",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "stark",
+						"username": "arya@library.do"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"isbn\": \"9780006479888\",\n        \"author\": \"George R. R. Martin\",\n        \"title\": \"A Game of Thrones\",\n        \"publisher\": \"HarperCollins Publishers\",\n        \"cid\": \"LM-000001\",\n        \"genre\": \"Fantasy\",\n        \"availability\": \"Available\"\n    }"
+				},
+				"url": "http://localhost:8080/library/books"
+			},
+			"response": []
+		}
+	]
+}

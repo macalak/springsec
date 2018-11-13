@@ -1,0 +1,21 @@
+version: '2.1'
+services:
+  openldap:
+    image: osixia/openldap
+    restart: always
+    volumes_from:
+      - openldap-datavolume
+    ports:
+      - 389:389/tcp
+      - 636:636/tcp
+    environment:
+      - LDAP_ORGANISATION="LibraryMaster"
+      - LDAP_DOMAIN="librarymaster.org"
+      - LDAP_ADMIN_PASSWORD="password"    
+
+  openldap-datavolume:
+    volumes:
+      - /var/lib/ldap
+      - /etc/ldap/slapd.d
+    entrypoint: /bin/true
+    image: busybox

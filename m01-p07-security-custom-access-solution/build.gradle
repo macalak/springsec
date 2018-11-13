@@ -1,0 +1,42 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'ite.librarymaster'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile("org.springframework.boot:spring-boot-starter-data-jpa")
+  compile('org.springframework.boot:spring-boot-starter-security')
+  compile('org.springframework.security:spring-security-acl')
+  compile('org.springframework.security:spring-security-data')
+  compile('org.springframework:spring-context-support')
+  compile("org.keycloak:keycloak-spring-boot-2-starter:4.0.0.Final")
+
+  compile("org.springframework:spring-tx")
+  compile('org.modelmapper:modelmapper:1.1.0')
+  compile('net.sf.ehcache:ehcache-core:2.6.11')
+
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+  runtime "com.h2database:h2"
+}

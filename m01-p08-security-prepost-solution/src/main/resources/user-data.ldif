@@ -1,0 +1,71 @@
+dn: dc=librarymaster,dc=org
+objectclass: top
+objectclass: domain
+objectclass: extensibleObject
+dc: librarymaster
+
+dn: ou=groups,dc=librarymaster,dc=org
+objectclass: top
+objectclass: organizationalUnit
+ou: groups
+
+dn: ou=people,dc=librarymaster,dc=org
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+
+dn: ou=privileges,dc=librarymaster,dc=org
+objectclass: top
+objectclass: organizationalUnit
+ou: privileges
+
+dn: uid=john,ou=people,dc=librarymaster,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: John Snow
+sn: Snow
+uid: john
+userPassword: {noop}snow
+
+dn: uid=arya,ou=people,dc=librarymaster,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Arya Stark
+sn: Stark
+uid: arya
+userPassword: {noop}stark
+
+# Create Groups
+dn: cn=users,ou=groups,dc=librarymaster,dc=org
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: users
+ou: user
+uniqueMember: uid=john,ou=people,dc=librarymaster,dc=org
+uniqueMember: uid=arya,ou=people,dc=librarymaster,dc=org
+
+dn: cn=admins,ou=groups,dc=librarymaster,dc=org
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: admins
+ou: admin
+uniqueMember: uid=john,ou=people,dc=librarymaster,dc=org
+
+# Create Privileges
+dn: cn=BOOK_READ_PRIVILEGE,ou=privileges,dc=librarymaster,dc=org
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: BOOK_READ_PRIVILEGE
+ou: bookreader
+uniqueMember: uid=john,ou=people,dc=librarymaster,dc=org
+
+dn: cn=BOOK_WRITE_PRIVILEGE,ou=privileges,dc=librarymaster,dc=org
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: BOOK_WRITE_PRIVILEGE
+ou: bookwritter
+uniqueMember: uid=arya,ou=people,dc=librarymaster,dc=org
