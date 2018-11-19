@@ -3,16 +3,18 @@ package ite.librarymaster.application.service;
 import ite.librarymaster.application.dto.BookDTO;
 import ite.librarymaster.application.exception.ItemNotFoundException;
 import ite.librarymaster.domain.model.Book;
+import ite.librarymaster.domain.model.BookRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-
-import ite.librarymaster.domain.model.BookRepository;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class LibraryServiceImpl implements LibraryService{
@@ -22,9 +24,15 @@ public class LibraryServiceImpl implements LibraryService{
     @Autowired
     private ModelMapper modelMapepr;
 
+    @Autowired
+    CacheManager cacheManager;
 
     @Override
-	public List<BookDTO> getAllBooks() {
+    // Spring Caching
+    @Cacheable(value="allbooks")
+    public List<BookDTO> getAllBooks() {
+        SecurityContext context = SecurityContextHolder.getContext();
+
         return bookRepository.findAll().stream()
                 .map(book -> modelMapepr.map(book, BookDTO.class))
                 .collect(Collectors.toList());
@@ -39,4 +47,5 @@ public class LibraryServiceImpl implements LibraryService{
             throw new ItemNotFoundException("Book with id=" + id + " not found.");
         }
     }
+
 }

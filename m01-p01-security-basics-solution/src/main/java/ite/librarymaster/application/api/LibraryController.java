@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/library")
+@Transactional
 public class LibraryController {
 	final private static Logger LOG = LoggerFactory.getLogger(LibraryController.class);
     
@@ -30,6 +33,7 @@ public class LibraryController {
     LibraryService libraryService;
     
     @RequestMapping(produces={"application/json"}, value="/books", method=RequestMethod.GET )
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     //@Secured("ROLE_ADMIN")
     public List<BookDTO> getAllBooks() {
     	LOG.info("Getting all books...");
@@ -41,5 +45,7 @@ public class LibraryController {
     	LOG.info("Getting book identified by id:{} ...", id);
         return libraryService.getBookById(id);
     }
+
+
    
 }

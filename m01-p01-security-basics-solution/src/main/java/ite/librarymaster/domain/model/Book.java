@@ -1,8 +1,12 @@
 package ite.librarymaster.domain.model;
 
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Cacheable;
 
 /**
  * This class models a Book media type.
@@ -12,6 +16,8 @@ import javax.persistence.Enumerated;
  */
 
 @Entity
+@Cacheable
+//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Book extends Text {
 	
 	private String author;

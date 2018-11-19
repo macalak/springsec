@@ -10,6 +10,7 @@ import javax.persistence.*;
  *
  */
 @MappedSuperclass
+@javax.persistence.Cacheable
 public abstract class Medium {
 	
 	@Id
